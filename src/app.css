@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&family=Roboto:wght@400;900&display=swap');
+
+:root {
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  letter-spacing: 0.0625rem;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: var(--light);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+
+  --blue: cyan;
+  --light: violet;
+  --dark: indigo;
+  --white: white;
+  --black: #2b2b2b;
+}
+
+input {
+  font-size: 1rem;
+  letter-spacing: 0.0625rem;
+  height: 2.25rem;
+  margin-bottom: 1rem;
+  padding-left: 0.5rem;
+  width: 18rem;
+}
+
+
+.error-text {
+  color: magenta;
+}
+.shake {
+  animation: rattle 0.3s;
+  animation-iteration-count: 1;
+  border: 2px solid magenta;
+}
+
+@keyframes rattle {
+  0% { transform: translate(1px, 1px) rotate(0deg); }
+  10% { transform: translate(-1px, -2px) rotate(-1deg); }
+  20% { transform: translate(-3px, 0px) rotate(1deg); }
+  30% { transform: translate(3px, 2px) rotate(0deg); }
+  40% { transform: translate(1px, -1px) rotate(1deg); }
+  50% { transform: translate(-1px, 2px) rotate(-1deg); }
+  60% { transform: translate(-3px, 1px) rotate(0deg); }
+  70% { transform: translate(3px, 1px) rotate(-1deg); }
+  80% { transform: translate(-1px, -1px) rotate(1deg); }
+  90% { transform: translate(1px, 2px) rotate(0deg); }
+  100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+
+a {
+  font-weight: 500;
+  color: var(--blue);
+  text-decoration: none;
+}
+a:hover {
+  color: cyan;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+#app {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+button {
+  border-radius: 8px;
+  display: block;
+  margin: 2rem;
+  padding: 0.6em 1.2em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: var(--black);
+  cursor: pointer;
+  transition: border-color 0.25s;
+    border: 2px solid var(--white);
+    box-shadow: 6px 6px var(--dark);
+    text-align: right;
+    height: 2.25rem;
+}
+button:hover {
+  border-color: var(--blue);
+  transform: translateY(2px);
+  box-shadow: 6px 4px var(--dark);
+
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto var(--blue);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: var(--dark);
+    background-color: var(--white);
+  }
+  a:hover {
+    color: var(--blue);
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}
