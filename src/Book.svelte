@@ -1,5 +1,6 @@
 <script>
     export let data;
+    export let confetti;
     import Check from "./Check.svelte";
     import { createEventDispatcher } from 'svelte';
     import BookShell from "./BookShell.svelte";
@@ -36,6 +37,13 @@
         newAuthor = data.author;
     }
 
+    const checkIfComplete = () => {
+        const isComplete = !data.chapters.some(ch => !ch.complete);
+        if (isComplete) {
+            confetti.addConfetti();
+        }
+    }
+
 </script>
 
 <BookShell>
@@ -55,7 +63,7 @@
         </div>
         <div class="chapter-section">
             {#each data?.chapters as chapter, index}
-                <Check chapter={chapter} number={index + 1} on:message/>
+                <Check chapter={chapter} number={index + 1} on:message on:chapterFinished={checkIfComplete}/>
             {/each}
         </div>
     </div>

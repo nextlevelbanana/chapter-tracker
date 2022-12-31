@@ -2,6 +2,9 @@
     import Book from './Book.svelte';
     import AddBook from './AddBook.svelte';
     import {books} from "./store.js";
+    import JSConfetti from 'js-confetti';
+
+    const confetti = new JSConfetti()
 
     let newBook;
     let lastID = $books.length;
@@ -43,7 +46,7 @@
   <AddBook bind:newBook bind:lastID/>
   
   {#each $books as book}
-    <Book data={book} on:message={saveBooks} on:deleteBook={deleteBook} on:saveBook={save}/>
+    <Book data={book} confetti={confetti} on:message={saveBooks} on:deleteBook={deleteBook} on:saveBook={save}/>
   {/each}
 </main>
 

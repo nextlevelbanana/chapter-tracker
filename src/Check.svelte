@@ -32,9 +32,14 @@
 		});
 	}
 
+    const checkIfComplete = () => {
+        dispatch('chapterFinished')
+    }
+
     const updateDate = e => {
         if (e.target.checked) {
             chapter.date = new Date().toLocaleDateString();
+            checkIfComplete();
         } else {
             chapter.date = null;
         }
