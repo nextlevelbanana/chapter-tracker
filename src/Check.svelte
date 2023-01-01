@@ -73,7 +73,7 @@
 
     input[type="checkbox"]:checked {
         background-color: var(--blue);
-        opacity: 0.6;
+        opacity: 0.8;
     }
 
     .name {

@@ -1,10 +1,36 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&family=Roboto:wght@400;900&display=swap');
+@font-face {
+  font-family: "Roboto";
+  src: url("Roboto-Black.ttf");
+  font-weight: 900;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Roboto";
+  src: url("Roboto-Regular.ttf");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Roboto";
+  src: url("Roboto-LightItalic.ttf");
+  font-weight: 400;
+  font-style: italic;
+}
+@font-face {
+  font-family: "Roboto";
+  src: url("Roboto-Thin.ttf");
+  font-weight: 100;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Roboto Slab";
+  src: url("RobotoSlab-ExtraBold.ttf");
+}
 
 :root {
   font-family: 'Roboto', sans-serif;
   font-size: 16px;
   line-height: 24px;
-  font-weight: 400;
   letter-spacing: 0.0625rem;
 
   color-scheme: light dark;
@@ -58,7 +84,6 @@ input {
 }
 
 a {
-  font-weight: 500;
   color: var(--blue);
   text-decoration: none;
 }
@@ -68,18 +93,16 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
 }
 
 h1 {
-  font-size: 3.2em;
+  font-size: 3rem;
   line-height: 1.1;
 }
 
-#app {
+main {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
@@ -87,11 +110,14 @@ h1 {
 
 button {
   border-radius: 8px;
-  display: block;
+  color: var(--blue);
+  align-items: center;
+  display: flex;
   margin: 2rem;
-  padding: 0.6em 1.2em;
-  font-weight: 500;
-  font-family: inherit;
+  padding: 1.5rem;
+  font-weight: 900;
+  font-size: 1rem;
+  letter-spacing: 0.0625rem;
   background-color: var(--black);
   cursor: pointer;
   transition: border-color 0.25s;
@@ -99,9 +125,12 @@ button {
     box-shadow: 6px 6px var(--dark);
     text-align: right;
     height: 2.25rem;
+  width: 6.25rem;
+  justify-content: center;
 }
 button:hover {
   border-color: var(--blue);
+  color: var(--white);
   transform: translateY(2px);
   box-shadow: 6px 4px var(--dark);
 
@@ -109,6 +138,11 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto var(--blue);
+}
+
+p {
+  color: var(--dark);
+  font-style: italic;
 }
 
 @media (prefers-color-scheme: light) {

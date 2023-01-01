@@ -38,9 +38,13 @@
     }
 
     const checkIfComplete = () => {
-        const isComplete = !data.chapters.some(ch => !ch.complete);
+        const isComplete = !data?.chapters.some(ch => !ch.complete);
         if (isComplete) {
-            confetti.addConfetti();
+            confetti.addConfetti({
+                confettiNumber: 600
+            }).then(dispatch('completeBook', {
+                id: data.id
+            }));
         }
     }
 
@@ -84,14 +88,14 @@
 <style>
     .title {
         font-size: 3rem;
-        font-weight: bolder;
+        font-weight: 900;
         margin-top: 0;
         margin-bottom: 0.5rem;
     }
     
     .author {
         font-style: italic;
-        font-weight: lighter;
+        font-weight: 400;
     }
 
     .header {

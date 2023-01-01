@@ -1,4 +1,4 @@
-<div class="book">
+<div class="book" transition:fly="{{y: -100, duration: 600}}">
     <div class="border">
         <slot name="content"/>
     </div>
@@ -7,6 +7,10 @@
     </div>
 </div>
 
+<script>
+    import {fly} from "svelte/transition";
+</script>
+
 <style>
 
     .border {
@@ -14,13 +18,12 @@
         border: 3px solid white;
         border-radius: 1rem;
         box-shadow: 10px 10px black;
-        margin-top: 3rem;
+        margin-bottom: 3rem;
         padding: 3rem;
         width: 80%;
     }
 
     .book {
-        align-items: end;
         display:flex;
         justify-content: space-between;
     }

@@ -59,7 +59,7 @@
         </label>
     </div>
     <div slot="buttons">
-        <button on:click={save}>Add</button>
+        <button on:click={save}>add</button>
     </div>
 </BookShell>
 
@@ -71,6 +71,7 @@
     }
 
     label {
+        font-weight: 400;
         height: 2.25rem;
         margin-right: 1rem;
     }
