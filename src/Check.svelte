@@ -4,7 +4,12 @@
         type="checkbox" 
         bind:checked={chapter.complete}
         
-        on:change={(e) => updateDate(e)}
+        on:change={(e) => {
+            if (chapter.complete) {
+                chapter.date = new Date().toISOString().split("T")[0];
+                showEditPane = true;
+            }
+        }}
         on:mouseenter={() => {
             if (chapter.complete) {
                 showEditPane = true;
@@ -40,6 +45,13 @@
             setTimeout(() => {
                 showEditPane = false;
             }, 1000)
+        }
+    }
+
+    $: {
+        if (!showEditPane) {
+            checkIfComplete();
+            tellAppToSave();
         }
     }
 
