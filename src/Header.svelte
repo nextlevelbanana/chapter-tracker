@@ -1,6 +1,6 @@
 <header>
     <h1>Chapter Tracker</h1>
-    <button class="dropdown-trigger" on:click={() => showInProgress = !showInProgress}>view</button>
+    <button class="dropdown-trigger" on:click={() => {showInProgress = !showInProgress; window.scrollTo(0,0) }}>view</button>
     <button class="dropdown-trigger" on:click={downloadJson}>save data</button>
     <button class="dropdown-trigger" on:click={loadFromJson}>load from JSON</button>
     <button class="dropdown-trigger" on:click={() => showStats = !showStats}>stats</button>

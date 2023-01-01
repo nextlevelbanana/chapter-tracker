@@ -3,15 +3,51 @@
     <input 
         type="checkbox" 
         bind:checked={chapter.complete}
-        title={chapter.date ? chapter.date : "incomplete"}
-        on:change={updateDate}
+        
+        on:change={(e) => updateDate(e)}
+        on:mouseenter={() => {
+            if (chapter.complete) {
+                showEditPane = true;
+            }
+        }} 
+        on:mouseleave={() => {
+            setTimeout(() => {if (!editDateHasFocus) showEditPane = false}, 2000)
+            }}     
     />
+    {#if showEditPane}
+<div class="edit-date">
+    <input type="text" placeholder="yyyy-mm-dd" bind:value={chapter.date} on:mouseenter={() => editDateHasFocus = true} bind:this={dateInputElement} on:blur={loseFocus} on:mouseleave={loseFocus}/>
+    {#if showDateError}
+        enter date as YYYY-MM-DD
+    {/if}
+
+</div>
+{/if}
 </label>
+
 
 <script>
     export let chapter;
     export let number;
+    let dateInputElement;
+    let editDateHasFocus = false;
+    let showDateError = false;
     import { createEventDispatcher } from 'svelte';
+    let showEditPane = false;
+
+    $: {
+        if (!editDateHasFocus) {
+            setTimeout(() => {
+                showEditPane = false;
+            }, 1000)
+        }
+    }
+
+    const loseFocus = () => {
+        if (dateInputElement != document.activeElement) {
+            editDateHasFocus = false;
+        }
+    }
 
     const getDisplayNumber = () => {
         if (number !== 1 && number % 5 !== 0) {
@@ -36,9 +72,9 @@
         dispatch('chapterFinished')
     }
 
-    const updateDate = e => {
+    const updateDate = (e, date) => {
         if (e.target.checked) {
-            chapter.date = new Date().toLocaleDateString();
+            chapter.date = date || new Date().toISOString().split("T")[0];
             checkIfComplete();
         } else {
             chapter.date = null;
@@ -49,6 +85,12 @@
 </script>
 
 <style>
+    input[type="text"] {
+        position:absolute;
+        top: -3rem;
+        left: -2.25rem;
+        width: 7rem;
+    }
     input[type="checkbox"] {
         /* Add if not using autoprefixer */
         -webkit-appearance: none;
@@ -104,6 +146,7 @@
         justify-items: center;
         width: max(3rem,12.5%);
         height: 4.5rem;
+        position: relative;
     }
 
     input[type="checkbox"]:checked::before {
