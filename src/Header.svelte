@@ -3,6 +3,7 @@
     <button class="dropdown-trigger" on:click={() => {showInProgress = !showInProgress; window.scrollTo(0,0) }}>view</button>
     <button class="dropdown-trigger" on:click={downloadJson}>save data</button>
     <button class="dropdown-trigger" on:click={loadFromJson}>load from JSON</button>
+    <button class="dropdown-trigger" on:click={clearAllData}>nuke data</button>
     <button class="dropdown-trigger" on:click={() => showStats = !showStats}>stats</button>
 
     {#if showStats}
@@ -31,6 +32,7 @@
 
 <script>
     import { createEventDispatcher } from 'svelte';
+    import { BOOKS_KEY, COMPLETE_BOOKS_KEY } from './constants.js';
 
     export let showInProgress;
     let showStats = false;
@@ -50,6 +52,15 @@
     $: inProgress = $books.length;
     $: chaptersRead = getNumberRead($books) + getNumberRead($completedBooks);
 
+    const clearAllData = () => {
+        if (confirm("This will erase all your data. There is no undo. Are you sure you want to?")) {
+            localStorage.removeItem(BOOKS_KEY);
+            localStorage.removeItem(COMPLETE_BOOKS_KEY);
+            books.set([]);
+            completedBooks.set([]);
+        }
+    }
+ 
     const load = () => {
         try {
             files[0].text().then(data => {

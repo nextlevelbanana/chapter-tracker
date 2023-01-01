@@ -9,13 +9,21 @@ Note that this stores all your data locally, in your browser. What does that mea
 - Changing computers or browsers makes you effectively a new user. *If you use this website in a private tab, your data will be lost when you close the tab!*
 
 ## To do list
-[ ] Edit completion dates
-[ ] Section for completed books
-[ ] Clear All Data button
+[X] Edit completion dates
+
+[X] Section for completed books
+
+[X] Clear All Data button
+
 [ ] Mobile-friendly
-[ ] Import and export
+
+[X] Import and export
+
 [ ] Printable
+
 [ ] Shareable
+
 [ ] CSS themes
+
 [ ] Title and author typeahead (is there a public API for this somewhere...?)
 

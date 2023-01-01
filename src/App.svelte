@@ -6,6 +6,7 @@
     import Header from './Header.svelte';
     import Footer from './Footer.svelte';
     import CompletedBook from './CompletedBook.svelte';
+    import { BOOKS_KEY, COMPLETE_BOOKS_KEY } from './constants';
 
     const confetti = new JSConfetti()
 
@@ -24,7 +25,7 @@
     const saveBooks = () => {
       books.set($books);
       let bookString = JSON.stringify($books);
-      localStorage.setItem("nlb-chapter-tracker-books", bookString);
+      localStorage.setItem(BOOKS_KEY, bookString);
     }
 
     const saveAll = () => {
@@ -34,7 +35,7 @@
 
     const saveCompletedBooks = () => {
       let bookString = JSON.stringify($completedBooks);
-      localStorage.setItem("nlb-chapter-tracker-books-complete", bookString);
+      localStorage.setItem(COMPLETE_BOOKS_KEY, bookString);
     }
 
     const save = (msg) => {
