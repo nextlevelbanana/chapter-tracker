@@ -28,4 +28,15 @@
         justify-content: space-between;
     }
 
+    @media print {
+        .border {
+            border: none;
+            box-shadow: none;
+            padding: 0;
+            width: 100%;
+            margin-bottom: 0.5rem;
+        }
+
+    }
+
 </style>

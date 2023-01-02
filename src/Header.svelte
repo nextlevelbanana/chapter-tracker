@@ -16,8 +16,6 @@
         {#if showStats}
             <StatsPane mq="monitor"/>
         {/if}
-
-       
     {/if}
     </MediaQuery>
 
@@ -204,6 +202,21 @@
 
     li:not(:last-child) {
         border-bottom: 1px solid var(--light);
+    }
+
+    @media print {
+
+        header {
+            background-color: none;
+        }
+
+        h1 {
+            display: none;
+        }
+
+        .dropdown-trigger {
+            display: none;
+        }
     }
 
 </style>

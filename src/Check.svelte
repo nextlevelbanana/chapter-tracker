@@ -154,4 +154,19 @@
         transform: scale(1);
     }
 
+    @media print {
+        input[type="checkbox"] {
+            width: 1rem;
+            height: 1rem;
+        }
+
+        label {
+            height: 3rem;
+            width: max(3rem,10%);
+        }
+
+        .name {
+            font-size: 1.5rem;
+        }
+    }
 </style>

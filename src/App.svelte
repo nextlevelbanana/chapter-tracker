@@ -73,7 +73,6 @@
 
 <main>
   {#if showInProgress}
-  <h2>Add New</h2>
     <AddBook bind:newBook bind:lastID/>
     
     <h2>In Progress</h2>
@@ -91,14 +90,16 @@
 <Footer/>
 
 <style>
-  h2 {
-    color: var(--dark);
-    margin-bottom: 1rem;
-    font-weight: 300;
-    font-style: italic; 
-  }
-
   main {
     margin-top: 1rem;
+  }
+
+  @media print {
+    h2 {
+      display:none;
+    }
+    main {
+      margin-top: 3rem;
+    }
   }
 </style>

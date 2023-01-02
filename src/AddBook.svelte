@@ -36,36 +36,37 @@
 
 </script>
 
-<BookShell>
-    <div slot="content">
-        <label class:error-text={hasTitleError}> Title*
-            {#if hasTitleError}
-             (required)
-            {/if}
-            <input class:shake={hasTitleError} on:focus={clearTitle} type="text" bind:value={title}/>
-           
-        </label>
+<div class="nonprinting">
+    <h2>Add New</h2>
+    <BookShell>
+        <div slot="content">
+            <label class:error-text={hasTitleError}> Title*
+                {#if hasTitleError}
+                (required)
+                {/if}
+                <input class:shake={hasTitleError} on:focus={clearTitle} type="text" bind:value={title}/>
+            
+            </label>
 
-        <label>Author
-            <input type="text" bind:value={author}/>
-        </label>
+            <label>Author
+                <input type="text" bind:value={author}/>
+            </label>
 
-        
-        <label class:error-text={hasNumError}>Number of Sections
-            {#if hasNumError}
-             (needs at least 1 section)
-            {/if}
-            <input class:shake={hasNumError} on:focus={clearNum} type="number" min="1" bind:value={number}/>
-        </label>
-    </div>
-    <div slot="buttons">
-        <button on:click={save}>add</button>
-    </div>
-</BookShell>
+            
+            <label class:error-text={hasNumError}>Number of Sections
+                {#if hasNumError}
+                (needs at least 1 section)
+                {/if}
+                <input class:shake={hasNumError} on:focus={clearNum} type="number" min="1" bind:value={number}/>
+            </label>
+        </div>
+        <div slot="buttons">
+            <button on:click={save}>add</button>
+        </div>
+    </BookShell>
+</div>  
 
 <style>
-    
-
     input[type="number"] {
         width: 5rem;
     }
@@ -75,5 +76,4 @@
         height: 2.25rem;
         margin-right: 1rem;
     }
-
 </style>

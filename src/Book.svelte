@@ -113,5 +113,20 @@
         margin-right: 1.5rem;
     }
 
+    @media print {
+        .title, .author {
+            display: inline;
+        }
+
+        .header {
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .chapter-section {
+            margin-left: 0;
+        }
+    }
+
 </style>
 
