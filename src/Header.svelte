@@ -2,7 +2,7 @@
 <header on:click|self={closeAllDropdowns}>
     <MediaQuery query={MONITOR} let:matches>
         {#if matches}
-            <h1>Chapter Tracker</h1>
+            <h1>Chunk A Book</h1>
             <button class="dropdown-trigger" on:click={toggleView}>view</button>
             <button class="dropdown-trigger" on:click={downloadJson}>save data</button>
             <div class="dropdown-container">
@@ -21,7 +21,7 @@
 
     <MediaQuery query={TABLET} let:matches>
         {#if matches}
-            <h1 class="tablet">Chapter Tracker</h1>
+            <h1 class="tablet">Chunk A Book</h1>
             <button class="dropdown-trigger" on:click={toggleView}>view</button>
             <button class="dropdown-trigger" on:click={downloadJson}>save</button>
             <div class="dropdown-container">

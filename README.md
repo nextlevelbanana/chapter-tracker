@@ -21,7 +21,7 @@ Note that this stores all your data locally, in your browser. What does that mea
 
 [X] Printable
 
-[ ] Reorder books
+[ ] Reorder books in lists
 
 [ ] Shareable
 
