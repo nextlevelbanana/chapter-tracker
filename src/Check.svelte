@@ -83,17 +83,6 @@
     const checkIfComplete = () => {
         dispatch('chapterFinished')
     }
-
-    const updateDate = (e, date) => {
-        if (e.target.checked) {
-            chapter.date = date || new Date().toISOString().split("T")[0];
-            checkIfComplete();
-        } else {
-            chapter.date = null;
-        }
-        tellAppToSave();
-    }
-
 </script>
 
 <style>

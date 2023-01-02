@@ -1,58 +1,102 @@
-<header>
-    <h1>Chapter Tracker</h1>
-    <button class="dropdown-trigger" on:click={() => {showInProgress = !showInProgress; window.scrollTo(0,0) }}>view</button>
-    <button class="dropdown-trigger" on:click={downloadJson}>save data</button>
-    <button class="dropdown-trigger" on:click={loadFromJson}>load from JSON</button>
-    <button class="dropdown-trigger" on:click={clearAllData}>nuke data</button>
-    <button class="dropdown-trigger" on:click={() => showStats = !showStats}>stats</button>
-
-    {#if showStats}
-    <div transition:slide="{{duration: 600}}" class="dropdown-pane">
-        <div><strong>In Progress: </strong> {inProgress}</div>
-        <div><strong>Total Chapters Read: </strong>{chaptersRead}</div>
-        <div><strong>Books Completed: </strong>{$completedBooks.length}</div>   
-    </div>
-    {/if}
-
-    {#if showUploadDialog}
-    <div transition:slide="{{duration: 600}}" class="dropdown-pane">
-        <input
-            accept="application/json"
-            id="newData"
-            name="newData"
-            type="file"
-            bind:files
-        />
-        {#if files}
-        <button on:click={load}>load it already</button>
+<!-- svelte-ignore a11y-click-events-have-key-events -->
+<header on:click|self={closeAllDropdowns}>
+    <MediaQuery query={MONITOR} let:matches>
+        {#if matches}
+            <h1>Chapter Tracker</h1>
+            <button class="dropdown-trigger" on:click={toggleView}>view</button>
+            <button class="dropdown-trigger" on:click={downloadJson}>save data</button>
+            <div class="dropdown-container">
+                <button class="dropdown-trigger" on:click={loadFromJson}>load from JSON</button>
+                {#if showUploadDialog}
+                    <UploadDialog mq="monitor" bind:showUploadDialog />
+                {/if}
+            </div>
+            <button class="dropdown-trigger" on:click={clearAllData}>nuke data</button>
+            <button class="dropdown-trigger" on:click={() => showStats = !showStats}>stats</button>
+        {#if showStats}
+            <StatsPane mq="monitor"/>
         {/if}
-    </div>
+
+       
     {/if}
+    </MediaQuery>
+
+    <MediaQuery query={TABLET} let:matches>
+        {#if matches}
+            <h1 class="tablet">Chapter Tracker</h1>
+            <button class="dropdown-trigger" on:click={toggleView}>view</button>
+            <button class="dropdown-trigger" on:click={downloadJson}>save</button>
+            <div class="dropdown-container">
+                <button class="dropdown-trigger" on:click={loadFromJson}>load</button>
+                {#if showUploadDialog}
+                    <UploadDialog mq="tablet" bind:showUploadDialog />
+                {/if}
+            </div>
+            <button class="dropdown-trigger" on:click={clearAllData}>nuke</button>
+            <div>
+                <button class="dropdown-trigger" on:click={() => showStats = !showStats}>stats</button>
+                {#if showStats}
+                    <StatsPane mq="tablet"/>
+                {/if}
+            </div>
+        {/if}
+    </MediaQuery>
+
+    <MediaQuery query={PHONE} let:matches>
+        {#if matches}
+            <button class="phone dropdown-trigger" on:click={() => {showMobileMenu = !showMobileMenu; showStats = false;}}>🍔</button>
+            {#if showMobileMenu}
+                <DropdownPane mq="phone">
+                    <!-- svelte-ignore a11y-click-events-have-key-events -->
+                    <ul>
+                        <!-- svelte-ignore a11y-click-events-have-key-events -->
+                        <li on:click={toggleView}>view {showInProgress ? "completed" : "in progress"} books</li>
+                        <!-- svelte-ignore a11y-click-events-have-key-events -->
+                        <li on:click={downloadJson}>save data</li>
+                        <li on:click={loadFromJson}>load from JSON</li>
+                        <!-- svelte-ignore a11y-click-events-have-key-events -->
+                        <li on:click={clearAllData}>nuke data</li>
+                        <li on:click={toggleStats}>see stats</li>
+
+                    </ul>
+                </DropdownPane>
+            {/if}
+            {#if showUploadDialog}
+                <UploadDialog mq="phone" bind:showUploadDialog />
+            {/if}
+            {#if showStats}
+                <StatsPane mq="phone"/>
+            {/if}
+        {/if}
+    </MediaQuery>
 </header>
 
 <script>
-    import { createEventDispatcher } from 'svelte';
-    import { BOOKS_KEY, COMPLETE_BOOKS_KEY } from './constants.js';
+    import MediaQuery from "svelte-media-query";
+    import { BOOKS_KEY, COMPLETE_BOOKS_KEY, MONITOR, NOTPHONE, PHONE, TABLET } from './constants.js';
+    import DropdownPane from "./DropdownPane.svelte";
+    import StatsPane from "./StatsPane.svelte";
+    import UploadDialog from "./UploadDialog.svelte";
 
     export let showInProgress;
     let showStats = false;
     let showUploadDialog = false;
-    let files;
+    let showMobileMenu = false;
     import {books, completedBooks} from "./store.js";
-    const dispatch = createEventDispatcher();
 
-    const getNumberRead = arr => {
-        const sub = arr.reduce((total, book) => {
-            if (!book.chapters) return;
-            return total + book?.chapters.filter(c => c.complete).length;
-        }, 0);
-        return sub;
+    const toggleStats = () => {
+        showStats = !showStats;
+        showMobileMenu = false;
     }
 
-    $: inProgress = $books.length;
-    $: chaptersRead = getNumberRead($books) + getNumberRead($completedBooks);
+    const toggleView = () => {
+        showInProgress = !showInProgress; 
+        window.scrollTo(0,0);
+        showMobileMenu = false;
+    }
 
     const clearAllData = () => {
+        showMobileMenu = false;
         if (confirm("This will erase all your data. There is no undo. Are you sure you want to?")) {
             localStorage.removeItem(BOOKS_KEY);
             localStorage.removeItem(COMPLETE_BOOKS_KEY);
@@ -61,35 +105,6 @@
         }
     }
  
-    const load = () => {
-        try {
-            files[0].text().then(data => {
-                let json = JSON.parse(data);
-                books.set(json.books);
-                completedBooks.set(json.completedBooks);
-                showUploadDialog = false;
-                dispatch("load");
-            })
-        } catch (err) {
-            console.log(err)
-        }
-    }
-
-    function slide(node, { duration }) {
-		return {
-			duration,
-			css: t => {
-				const step = `${8*t}rem`;
-
-				return `
-					height: ${step};
-                    padding: ${t}rem 1rem;
-                    overflow: hidden;
-                    `
-			}
-		};
-    }
-
     const downloadJson = () => {
         const data = {
             books: [...$books],
@@ -104,9 +119,20 @@
     }
 
     const loadFromJson = () => {
+        if (showUploadDialog) {
+            showUploadDialog = false;
+            return;
+        }
         if (confirm("This will overwrite your current data. Are you sure?")) {
+            showMobileMenu = false;
             showUploadDialog = true;
         }
+    }
+
+    const closeAllDropdowns = () => {
+        showMobileMenu = false;
+        showStats = false;
+        showUploadDialog = false;
     }
 </script>
 
@@ -129,6 +155,11 @@
         margin: 0 0 0 3rem;
     }
 
+    h1.tablet {
+        margin-left: 1rem;
+        margin-right: 2rem;
+    }
+
     .dropdown-trigger {
         background-color: var(--dark);
         border-radius: 0;
@@ -142,6 +173,11 @@
         padding: 0 1rem;
         margin: 0 2rem 0 0;
         width: unset;
+        position: relative;
+    }
+
+    .dropdown-container {
+        position: relative;
     }
 
     .dropdown-trigger:hover {
@@ -152,18 +188,22 @@
         margin: 0 2rem 0 0;
     }
 
-    .dropdown-pane {
-        position: absolute;
-        top: calc(3rem + 1px);
-        right: 2rem;
-        height: 8rem;
-        min-width: 18rem;
-
-        background-color: var(--dark);
-        color: var(--light);
-        border: 2px solid var(--blue);
-        border-radius: 0 0 0.5rem 0.5rem;
-        box-shadow: 6px 6px var(--black);
-        padding: 1rem;
+    button.phone {
+        margin: 0;
     }
+
+    ul {
+        list-style: none;
+        margin-top: 0;
+        padding-left: 1rem;
+    }
+
+    li {
+        padding: 0.5rem 0;
+    }
+
+    li:not(:last-child) {
+        border-bottom: 1px solid var(--light);
+    }
+
 </style>
