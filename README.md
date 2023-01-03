@@ -15,7 +15,7 @@ Note that this stores all your data locally, in your browser. What does that mea
 
 [X] Clear All Data button
 
-[~] Mobile-friendly (in progress)
+[X] Mobile-friendly
 
 [X] Import and export
 
