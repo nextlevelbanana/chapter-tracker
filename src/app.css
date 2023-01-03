@@ -153,19 +153,6 @@ h2 {
   font-style: italic; 
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: var(--dark);
-    background-color: var(--white);
-  }
-  a:hover {
-    color: var(--blue);
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-}
-
 @media print {
   * {
     color: black !important;
