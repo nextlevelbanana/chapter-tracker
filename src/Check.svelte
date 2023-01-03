@@ -1,57 +1,54 @@
-<label>
+<label on:click|stopPropagation={() => console.log("label")}>
     <span class="name">{getDisplayNumber()}</span>
     <input 
         type="checkbox" 
         bind:checked={chapter.complete}
-        
+        title={chapter.date}
+        disabled={isEditing} 
         on:change={(e) => {
             if (chapter.complete) {
                 chapter.date = new Date().toISOString().split("T")[0];
-                showEditPane = true;
+                showOnlyThisEditPane = true;
+            } else {
+                chapter.date = null;
             }
         }}
-        on:mouseenter={() => {
-            if (chapter.complete) {
-                showEditPane = true;
-            }
-        }} 
-        on:mouseleave={() => {
-            setTimeout(() => {if (!editDateHasFocus) showEditPane = false}, 2000)
-            }}     
+        on:click|self={() => console.log("input")}
     />
-    {#if showEditPane}
-<div class="edit-date">
-    <input type="text" placeholder="yyyy-mm-dd" bind:value={chapter.date} on:mouseenter={() => editDateHasFocus = true} bind:this={dateInputElement} on:blur={loseFocus} on:mouseleave={loseFocus}/>
-    {#if showDateError}
-        enter date as YYYY-MM-DD
+    {#if (isEditing || showOnlyThisEditPane) && chapter.complete}
+        <div class="edit-date">
+            <input type="text" placeholder="yyyy-mm-dd" bind:value={chapter.date} on:mouseenter={() => editDateHasFocus = true} bind:this={dateInputElement} on:blur={loseFocus} on:mouseleave={loseFocus}/>
+            {#if showDateError}
+                enter date as YYYY-MM-DD
+            {/if}
+            {#if showOnlyThisEditPane}
+            <button class="ok" on:click={() => showOnlyThisEditPane = false}>OK</button>
+            {/if}
+        </div>
     {/if}
-
-</div>
-{/if}
 </label>
 
 
 <script>
     export let chapter;
     export let number;
+    export let isEditing;
+    let showOnlyThisEditPane = false;
     let dateInputElement;
     let editDateHasFocus = false;
     let showDateError = false;
     import { createEventDispatcher } from 'svelte';
-    let showEditPane = false;
 
     $: {
-        if (!editDateHasFocus) {
-            setTimeout(() => {
-                showEditPane = false;
-            }, 1000)
+        if (!isEditing) {
+            tellAppToSave();
         }
     }
-
+    
     $: {
-        if (!showEditPane) {
-            checkIfComplete();
+        if (!showOnlyThisEditPane) {
             tellAppToSave();
+            checkIfComplete();
         }
     }
 
@@ -89,7 +86,7 @@
     input[type="text"] {
         position:absolute;
         top: -3rem;
-        left: -2.25rem;
+        left: -6.75rem;
         width: 7rem;
     }
     input[type="checkbox"] {
@@ -145,13 +142,22 @@
         grid-template-columns: 2.25rem;
         font-size: 3rem;
         justify-items: center;
-        width: max(3rem,12.5%);
+        width: 2.25rem;
         height: 4.5rem;
         position: relative;
+        margin-right: calc(max(3rem,12.5%) - 2.25rem);
     }
 
     input[type="checkbox"]:checked::before {
         transform: scale(1);
+    }
+
+    .ok {
+        position: absolute;
+        top: -5rem;
+        left: -0.25rem;
+        padding: 1.25rem;
+        width: min-content;
     }
 
     @media print {

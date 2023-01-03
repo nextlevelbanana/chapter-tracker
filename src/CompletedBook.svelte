@@ -37,12 +37,14 @@
         font-weight: 900;
         margin-top: 0;
         margin-bottom: 0.5rem;
+        word-break: break-word;
     }
     
     .author {
         color: var(--white);
         font-style: italic;
         font-weight: 400;
+        word-break: break-word;
     }
 
     h2 {

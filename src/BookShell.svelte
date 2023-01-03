@@ -24,8 +24,9 @@
     }
 
     .book {
-        display:flex;
+        display: flex;
         justify-content: space-between;
+        min-width: 0;
     }
 
     @media print {
@@ -38,5 +39,17 @@
         }
 
     }
+
+    @media (min-width: 481px) and (max-width: 1280px) {
+
+    }
+
+    @media (max-width: 480px) {
+        .book {
+            flex-direction: column;
+            width: calc(100% - 2rem - 10px);
+        }
+    }
+
 
 </style>

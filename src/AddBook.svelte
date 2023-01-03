@@ -73,7 +73,35 @@
 
     label {
         font-weight: 400;
-        height: 2.25rem;
         margin-right: 1rem;
+        width: 50%;
     }
+
+    @media (max-width: 480px) {
+        label {
+            display: block;
+            width: max(15rem, 80%);
+        }
+
+        button {
+            margin-left: calc(100% - 4.5rem);
+        }
+    }
+
+    @media (min-width: 481px) and (max-width: 1280px) {
+        label {
+            display: block;
+            width: 100%;
+        }
+
+        input[type="text"] {
+            width: 100%;
+        }
+
+        input[type="number"] {
+            display: block;
+        }
+
+    }
+
 </style>

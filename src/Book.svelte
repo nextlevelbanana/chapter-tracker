@@ -57,17 +57,17 @@
                 <div class="title">{data?.title}</div>
                 <div class="author">{data?.author}</div>
             {:else}
-                <label class:error-text={hasTitleError} on:focus={() => hasTitleError = false}> Title* 
+                <label class="editing" class:error-text={hasTitleError} on:focus={() => hasTitleError = false}> Title* 
                     <input class:shake={hasTitleError} bind:value={newTitle}/>
                 </label>
-                <label> Author
+                <label class="editing"> Author
                     <input bind:value={newAuthor}/>
                 </label>
             {/if}
         </div>
         <div class="chapter-section">
             {#each data?.chapters as chapter, index}
-                <Check chapter={chapter} number={index + 1} on:message on:chapterFinished={checkIfComplete}/>
+                <Check chapter={chapter} bind:isEditing={isEditing} number={index + 1} on:message on:chapterFinished={checkIfComplete}/>
             {/each}
         </div>
     </div>
@@ -83,23 +83,23 @@
 </BookShell>
 
 
-
-
 <style>
     .title {
         font-size: 3rem;
         font-weight: 900;
         margin-top: 0;
         margin-bottom: 0.5rem;
+        word-break: break-word;
     }
     
     .author {
         font-style: italic;
         font-weight: 400;
+        word-break: break-word;
     }
 
     .header {
-       margin-bottom: 2rem;
+       margin-bottom: 2.5rem;
     }
 
     .chapter-section {
@@ -125,6 +125,17 @@
 
         .chapter-section {
             margin-left: 0;
+        }
+    }
+
+    @media (min-width: 481px) and (max-width: 1280px) {
+        .editing {
+            display: inline-block;
+            max-width: 45%;
+        }
+
+        .editing input {
+            max-width: 100%;
         }
     }
 
