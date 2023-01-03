@@ -62,8 +62,7 @@
     const completeBook = (msg) => {
       const completedBookIndex = $books.findIndex(book => book.id == msg.detail.id);
       const lastCompletedBook = $books.splice(completedBookIndex, 1);
-      $completedBooks.push(lastCompletedBook);
-      completedBooks.set($completedBooks.flat());
+      completedBooks.set([lastCompletedBook, ...$completedBooks].flat());
       saveBooks();
       saveCompletedBooks();
     }
