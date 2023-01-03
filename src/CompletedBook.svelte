@@ -56,4 +56,11 @@
             margin-top: 1.5rem;
         }
     }
+
+    @media (max-width: 480px) {
+      button {
+        margin-bottom: 5rem;
+        margin-top: 0;
+      }
+    }
   </style>

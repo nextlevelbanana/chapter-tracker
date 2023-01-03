@@ -9,7 +9,7 @@
 		return {
 			duration,
 			css: t => {
-				const step = `${(mq == "phone" ? 12: 8 )*t}rem`;
+				const step = `${(mq == "phone" ? 13 : 8 )*t}rem`;
 
 				return `
 					height: ${step};
@@ -43,7 +43,7 @@
     }
 
     .phone.dropdown-pane {
-        height: 12rem;
+        height: 13rem;
         right: 0;
         width: calc(100% - 2rem - 4px);
     }

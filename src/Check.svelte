@@ -1,4 +1,4 @@
-<label on:click|stopPropagation={() => console.log("label")}>
+<label>
     <span class="name">{getDisplayNumber()}</span>
     <input 
         type="checkbox" 
@@ -13,11 +13,18 @@
                 chapter.date = null;
             }
         }}
-        on:click|self={() => console.log("input")}
     />
     {#if (isEditing || showOnlyThisEditPane) && chapter.complete}
         <div class="edit-date">
-            <input type="text" placeholder="yyyy-mm-dd" bind:value={chapter.date} on:mouseenter={() => editDateHasFocus = true} bind:this={dateInputElement} on:blur={loseFocus} on:mouseleave={loseFocus}/>
+            <input 
+                on:focus={() => isFocused = true}
+                on:focusout={() => isFocused = false}
+                class:onTop={isFocused} 
+                type="text" 
+                placeholder="yyyy-mm-dd" 
+                bind:value={chapter.date} 
+                bind:this={dateInputElement} 
+                />
             {#if showDateError}
                 enter date as YYYY-MM-DD
             {/if}
@@ -35,8 +42,8 @@
     export let isEditing;
     let showOnlyThisEditPane = false;
     let dateInputElement;
-    let editDateHasFocus = false;
     let showDateError = false;
+    let isFocused = false;
     import { createEventDispatcher } from 'svelte';
 
     $: {
@@ -49,12 +56,6 @@
         if (!showOnlyThisEditPane) {
             tellAppToSave();
             checkIfComplete();
-        }
-    }
-
-    const loseFocus = () => {
-        if (dateInputElement != document.activeElement) {
-            editDateHasFocus = false;
         }
     }
 
@@ -85,7 +86,7 @@
 <style>
     input[type="text"] {
         position:absolute;
-        top: -3rem;
+        top: -3.45rem;
         left: -6.75rem;
         width: 7rem;
     }
@@ -154,10 +155,34 @@
 
     .ok {
         position: absolute;
-        top: -5rem;
+        top: -5.5rem;
         left: -0.25rem;
         padding: 1.25rem;
         width: min-content;
+    }
+
+    .onTop {
+        z-index: 10;
+    }
+
+    @media (max-width: 480px) {
+        label {
+            margin-right: 3rem;
+        }
+
+        .name {
+            font-size: 3.5rem;
+        }
+    }
+
+    @media (min-width: 480px) and (max-width: 1280px) {
+        label {
+            margin-right: 3.5rem;
+        }
+
+        .name {
+            font-size: 4rem;
+        }
     }
 
     @media print {

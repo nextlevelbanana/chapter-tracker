@@ -48,6 +48,14 @@
         .book {
             flex-direction: column;
             width: calc(100% - 2rem - 10px);
+        }    
+
+        .border {
+            margin-bottom: 2rem;
+        }
+
+        slot {
+            background-color: lime;
         }
     }
 

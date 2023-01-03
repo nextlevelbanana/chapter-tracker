@@ -84,7 +84,8 @@
         }
 
         button {
-            margin-left: calc(100% - 4.5rem);
+            margin-top: 0;
+            /* margin-left: calc(100% - 4.5rem); */
         }
     }
 

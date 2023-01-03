@@ -73,11 +73,15 @@
     </div>
     <div slot="buttons">
         {#if !isEditing}
-            <button on:click={() => isEditing = true}>edit</button>
-            <button on:click={deleteBook}>delete</button>
+            <div class="buttons">
+                <button on:click={() => isEditing = true}>edit</button>
+                <button on:click={deleteBook}>delete</button>
+            </div>  
         {:else}
-            <button on:click={save}>save</button>
-            <button on:click={cancel}>cancel</button>
+            <div class="buttons">
+                <button on:click={save}>save</button>
+                <button on:click={cancel}>cancel</button>
+            </div>
         {/if}
     </div>  
 </BookShell>
@@ -136,6 +140,16 @@
 
         .editing input {
             max-width: 100%;
+        }
+    }
+
+    @media (max-width: 480px) {
+        button {
+            margin-top: 0;
+        }
+
+        .buttons {
+            display: inline-flex;
         }
     }
 
