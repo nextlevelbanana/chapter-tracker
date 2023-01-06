@@ -159,6 +159,8 @@
         left: -0.25rem;
         padding: 1.25rem;
         width: min-content;
+        z-index: 10;
+        box-shadow: 2px 2px 2px var(--light);
     }
 
     .onTop {

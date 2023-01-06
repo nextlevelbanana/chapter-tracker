@@ -13,6 +13,7 @@
             </div>
             <button class="dropdown-trigger" on:click={clearAllData}>nuke data</button>
             <button class="dropdown-trigger" on:click={() => showStats = !showStats}>stats</button>
+            <button class="dropdown-trigger" on:click={() => showFAQ = !showFAQ}>FAQ</button>
         {#if showStats}
             <StatsPane mq="monitor"/>
         {/if}
@@ -37,12 +38,14 @@
                     <StatsPane mq="tablet"/>
                 {/if}
             </div>
+            <button class="dropdown-trigger" on:click={() => showFAQ = !showFAQ}>FAQ</button>
+
         {/if}
     </MediaQuery>
 
     <MediaQuery query={PHONE} let:matches>
         {#if matches}
-            <button class="phone dropdown-trigger" on:click={() => {showMobileMenu = !showMobileMenu; showStats = false;}}>🍔</button>
+            <button class="phone dropdown-trigger" on:click={() => {showMobileMenu = !showMobileMenu; showStats = false; showUploadDialog = false;}}>🍔</button>
             {#if showMobileMenu}
                 <DropdownPane mq="phone">
                     <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -55,6 +58,7 @@
                         <!-- svelte-ignore a11y-click-events-have-key-events -->
                         <li on:click={clearAllData}>nuke data</li>
                         <li on:click={toggleStats}>see stats</li>
+                        <li on:click={() => showFAQ = !showFAQ}>FAQ</li>
 
                     </ul>
                 </DropdownPane>
@@ -80,6 +84,7 @@
     let showStats = false;
     let showUploadDialog = false;
     let showMobileMenu = false;
+    export let showFAQ;
     import {books, completedBooks} from "./store.js";
 
     const toggleStats = () => {
@@ -88,9 +93,13 @@
     }
 
     const toggleView = () => {
-        showInProgress = !showInProgress; 
+        if (showFAQ) {
+            showFAQ = false;
+        } else {
+            showInProgress = !showInProgress; 
+        }
         window.scrollTo(0,0);
-        showMobileMenu = false;
+        closeAllDropdowns();
     }
 
     const clearAllData = () => {

@@ -6,6 +6,7 @@
     import Header from './Header.svelte';
     import Footer from './Footer.svelte';
     import CompletedBook from './CompletedBook.svelte';
+    import FAQ from "./FAQ.svelte";
     import { BOOKS_KEY, COMPLETE_BOOKS_KEY } from './constants';
 
     const confetti = new JSConfetti()
@@ -13,6 +14,7 @@
     let showInProgress = true;
     let newBook;
     let lastID = $books.length;
+    let showFAQ;
 
     $: {
       if (newBook) {
@@ -68,10 +70,12 @@
     }
 </script>
 
-<Header bind:showInProgress on:load={saveAll}/>
+<Header bind:showInProgress on:load={saveAll} bind:showFAQ/>
 
 <main>
-  {#if showInProgress}
+  {#if showFAQ}
+    <FAQ/>
+  {:else if showInProgress}
     <AddBook bind:newBook bind:lastID/>
     
     <h2>In Progress</h2>
