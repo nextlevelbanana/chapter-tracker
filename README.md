@@ -1,5 +1,5 @@
-# Chapter Tracker
-This oh-so-cleverly named little app helps you keep track of textbooks, anthologies, and anything else you might be reading slowly, one chapter at a time.
+# Chunk a book!
+This little app helps you keep track of textbooks, anthologies, and anything else you might be reading slowly, one chapter at a time. Use it at [https://chunkabook.com](chunkABook.com).
 
 ## Data privacy, etc
 Note that this stores all your data locally, in your browser. What does that mean, practically?
